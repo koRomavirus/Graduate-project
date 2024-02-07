@@ -1,0 +1,6 @@
+@Vlad.GraduateProjectAPI_HostAddress = http://localhost:5065
+
+GET {{Vlad.GraduateProjectAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
