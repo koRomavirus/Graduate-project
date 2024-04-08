@@ -34,7 +34,9 @@ namespace Vlad.GraduateProjectAPI.Service
 
                     using (var reader = await command.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        int rowCount = 0;
+
+                        while (reader.Read() && rowCount < 20) // Читаем только первые 20 строк
                         {
                             var employee = new EmployeeDto
                             {
@@ -43,12 +45,18 @@ namespace Vlad.GraduateProjectAPI.Service
                                 Duty = reader.GetString("Duty"),
                                 Department = reader.GetString("Dep"),
                                 Phone = reader.GetString("Phone")
-                                
                             };
 
                             employees.Add(employee);
+                            rowCount++; // Увеличиваем счетчик прочитанных строк
+
+                            if (rowCount >= 20) // Если прочитано 20 строк, прекращаем чтение
+                            {
+                                break;
+                            }
                         }
                     }
+
                 }
             }
             return employees;

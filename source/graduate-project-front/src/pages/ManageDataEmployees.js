@@ -8,7 +8,7 @@ const ManageDataEmployees =() =>{
     < >
    
     <CContainer>
-        <CRow  className="row  mt-3 ">
+        <CRow className="row mt-3 ">
             <CCol xs={3}>
             <CFormSelect  >
                 <option value="1">Без сортировки</option>
