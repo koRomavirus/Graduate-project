@@ -5,25 +5,29 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import './CardEmployee.css';
 import ModalDetailed from '../Modal/ModalDetailed';
 
-const CardEmployee = ()  => {
+const CardEmployee = ({searchEmployee, sortEmployee})  => {
     const [modalActive, setModalActive] = useState(null); 
     const [employees, setEmployees] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://localhost:7017/api/ControllerEmployee`);
+                const response = await axios.get(`https://localhost:7017/api/ControllerEmployee?sortingOptions=${sortEmployee}`);
                 setEmployees(response.data);
             } catch (error) {
                 console.error('Error fetching documents:', error);
             }           
         };
         fetchData();
-    }, []); 
+    }, [sortEmployee]); 
 
+
+    const filteredDocuments = employees.filter(employee => {
+        return employee.fullName.toLowerCase().includes(searchEmployee.toLowerCase())
+    })
     return (
     <>
-        {employees.map((employee, index) => (
+        {filteredDocuments.map((employee, index) => (
             <CCard key={index} className='card'>
                 <CCardBody >
                     <CCardTitle>{employee.fullName}</CCardTitle>
